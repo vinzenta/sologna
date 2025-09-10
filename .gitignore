@@ -1,0 +1,12 @@
+/target
+.env
+# Editors/IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+Desktop.ini

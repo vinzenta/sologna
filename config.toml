@@ -1,0 +1,41 @@
+# Sologna Configuration
+# This file contains settings for monitoring Solana programs
+
+# Target program address to monitor logs for
+target_address = "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
+
+# Optional: Path to IDL file for event decoding
+# If not provided, logs will be shown in raw format
+idl_file = "idl/pumpamm.json"
+
+# Optional: Commitment level for subscriptions (processed | confirmed | finalized)
+# Defaults to "processed" if not set or invalid
+commitment = "processed"
+
+
+[run]
+# Log level for application output (trace | debug | info | warn | error)
+log_level = "info"
+# Heartbeat ping interval in milliseconds (0 disables)
+heartbeat_interval_ms = 10000
+# Read inactivity timeout in milliseconds (0 disables)
+read_timeout_ms = 30000
+# Reconnect backoff configuration
+backoff_base_ms = 1000
+backoff_max_ms = 30000
+backoff_jitter = 0.3
+# Decode worker settings
+decode_queue_capacity = 256
+decode_concurrency = 2
+
+[sink]
+# Where to stream decoded events: "stdout" | "tcp" | "local" | "none"
+type = "local"
+# Address depends on type:
+# - Windows named pipe: \\ \. \pipe\sologna (escape accordingly in TOML string)
+# - Unix socket: /tmp/sologna.sock
+# - TCP: 127.0.0.1:5555
+addr = "\\\\.\\pipe\\sologna"
+# Sink buffering and timeout
+queue_capacity = 1024
+write_timeout_ms = 1000

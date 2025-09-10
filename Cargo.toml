@@ -1,0 +1,27 @@
+[package]
+name = "sologna"
+version = "0.1.0"
+edition = "2024"
+description = "General-purpose Solana log subscriber with IDL-based event decoding and pluggable sinks"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/vinzenta/sologna"
+homepage = "https://github.com/vinzenta/sologna"
+keywords = ["solana", "logs", "decoder", "idl", "websocket"]
+categories = ["command-line-utilities", "network-programming"]
+
+[dependencies]
+anyhow = "1.0.99"
+base64 = "0.22.1"
+bs58 = "0.5.1"
+dotenv = "0.15.0"
+futures-util = "0.3.31"
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.143"
+tokio = { version = "1.47.1", features = ["full", "signal"] }
+tokio-tungstenite = { version = "0.27.0", features = ["native-tls"] }
+toml = "0.9.5"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+rand = "0.8.5"
+interprocess = { version = "2.2.3", features = ["tokio"] }

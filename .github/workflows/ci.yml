@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    name: Build, fmt, clippy
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Format
+        run: cargo fmt --all -- --check
+
+      - name: Clippy (Unix)
+        if: matrix.os == 'ubuntu-latest'
+        run: cargo clippy --bin sologna --bin sink_reader -- -D warnings
+
+      - name: Clippy (Windows)
+        if: matrix.os == 'windows-latest'
+        run: cargo clippy --bin sologna --bin sink_reader -- -D warnings
+
+      - name: Build (Unix)
+        if: matrix.os == 'ubuntu-latest'
+        run: cargo build --release --bin sologna --bin sink_reader
+
+      - name: Build (Windows)
+        if: matrix.os == 'windows-latest'
+        run: cargo build --release --bin sologna --bin sink_reader
+
